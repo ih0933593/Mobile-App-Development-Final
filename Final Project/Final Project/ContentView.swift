@@ -14,7 +14,7 @@ struct ContentView: View {
         ZStack {
             VStack(spacing: 20) {
                 Text("Welcome")
-                Text(viewModel.usableData[0][0])
+                //Text(viewModel.usableData[0][0])
             }
             .padding()
         }

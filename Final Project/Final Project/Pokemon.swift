@@ -52,7 +52,7 @@ class PokemonViewModel: ObservableObject {
                 do {
                     let decodedResponse = try JSONDecoder().decode(PokemonResponse.self, from: data)
                     
-                    print("Ahhhhhhhhh")
+                    var ary = []
                     
                     var i = 0
                     for _ in decodedResponse.results {
@@ -63,9 +63,53 @@ class PokemonViewModel: ObservableObject {
                         APIurl = URL(string: self.Newurl!)!
                         print(APIurl)
                         
+//                        ary.append(APIurl)
+//                        
+//                        for INDurl in ary {
+////                            URLSession.shared.dataTask(with: INDurl) { data, response, error in
+//                            URLRequest(url: INDurl).httpMethod = "GET"
+//                                if let data = data {
+//                                    do {
+//    //                                    DispatchQueue.main.async {
+//    //                                        self.Newurl = decodedResponse.results[i].url
+//    //                                    }
+//
+//                                        let decodedResponse = try JSONDecoder().decode(Pokemon.self, from: data)
+//                                        
+//                                        DispatchQueue.main.async {
+//                                            self.name = decodedResponse.name!
+//                                            self.height = decodedResponse.height!
+//                                            self.weight = decodedResponse.weight!
+//                                            
+//                                            
+//                                            let index = self.usableData.count - 1
+//                                            
+//                                            self.usableData[index].append(self.name)
+//                                            self.usableData[index].append("\(self.height)")
+//                                            self.usableData[index].append("\(self.weight)")
+//                                            
+//                                            self.usableData.append([])
+//                                            print(self.name)
+////                                            i += 1
+//                                        }
+//                                        
+//                                    } catch {
+//                                        print ("Decoding error: \(error)")
+//                                    }
+//                                } else if let error = error {
+//                                    print("HTTP Request Failed: \(error)")
+//                                }
+//                                
+//                            }.resume()
+////                            i += 1
+//                        }
                         URLSession.shared.dataTask(with: APIurl) { data, response, error in
                             if let data = data {
                                 do {
+//                                    DispatchQueue.main.async {
+//                                        self.Newurl = decodedResponse.results[i].url
+//                                    }
+
                                     let decodedResponse = try JSONDecoder().decode(Pokemon.self, from: data)
                                     
                                     DispatchQueue.main.async {
@@ -82,7 +126,9 @@ class PokemonViewModel: ObservableObject {
                                         
                                         self.usableData.append([])
                                         print(self.name)
+//                                        i += 1
                                     }
+                                    
                                 } catch {
                                     print ("Decoding error: \(error)")
                                 }
