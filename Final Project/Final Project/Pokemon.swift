@@ -6,27 +6,44 @@
 //
 
 import Foundation
+import SwiftUI
 
 // Structs for API json data
-struct PokemonResponse: Codable, Hashable {
-    let count: Int
-    let next: String
-    let previous: String
-    let results: [String]
+struct PokemonResponse: Codable {
+    let count: Int?
+    let next: String?
+    let previous: String?
+    let results: [Result]
 }
 
+struct Result: Codable {
+    let name: String?
+    let url: String?
+}
+
+struct Pokemon: Codable {
+    let name: String?
+    let height: Int?
+    let weight: Int?
+    let sprites: [Sprite]
+}
+
+struct Sprite: Codable {
+    let front_default: String?
+}
+
+
+
 class PokemonViewModel: ObservableObject {
-//    @Published var id: Int = 0
-    @Published var name: String = ""
-    @Published var height: Int = 0
+    @Published var Newurl: String?
+    //@Published var respone: String?
     
-    // Could maybe send in a parameter for the id instead of getting a whole bunch all at once
     func fetchPokemon() {
 //        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/35/") else {
 //            print("Invalid URL")
 //            return
 //        }
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/") else {
+        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=5") else {
             print("Invalid URL")
             return
         }
@@ -39,11 +56,14 @@ class PokemonViewModel: ObservableObject {
                     
                     print("Ahhhhhhhhh")
                     
-                    DispatchQueue.main.async {
-//                        self.id = decodedResponse.id
-//                        self.name = decodedResponse.name
-//                        self.height = decodedResponse.height
+                    for response in decodedResponse.results {
+                        DispatchQueue.main.async {
+                            self.Newurl = decodedResponse.results[0].url
+                        }
                     }
+                    
+                    
+                    print("Ehhhhhhhh")
                 } catch {
                     print ("Decoding error: \(error)")
                 }
