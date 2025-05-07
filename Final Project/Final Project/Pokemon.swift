@@ -9,56 +9,11 @@ import Foundation
 
 // Structs for API json data
 struct PokemonResponse: Codable, Hashable {
-//    let pokemon: Pokemon
-//    let id : Int
-//    let name : String
-//    let height : Int
-//    let species: Species
-//    let datasets: [Dataset]
-//    let fields: [String]
-    let results: [Pokemon]
-}
-
-struct Pokemon: Codable, Hashable, Identifiable {
-//    let url: String
-//    let name: String
-    
     let count: Int
     let next: String
     let previous: String
-    let id: Int
-//    let results: [Result]
+    let results: [String]
 }
-
-struct Result: Codable {
-    let index: [Index]
-}
-
-struct Index: Codable {
-    let url: String
-}
-
-//struct Dataset: Codable {
-//    let fields: [Field]
-//}
-//
-//struct Field: Codable {
-//    let name : String
-//    let height: Int
-//}
-//
-//struct Species: Codable {
-//    
-//    let name: String
-////    let height: Int
-////    let sprites: Sprites
-////    let name: String
-//}
-
-//struct Sprites: Codable {
-//    let front_default: String
-//}
-
 
 class PokemonViewModel: ObservableObject {
 //    @Published var id: Int = 0
