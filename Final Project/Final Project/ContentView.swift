@@ -15,9 +15,9 @@ struct ContentView: View {
 //            Image(viewModel.pokemon.sprites.front_default)
 //                .imageScale(.large)
 //                .foregroundStyle(.tint)
-            Text(viewModel.name)
-//            Text(viewModel.id)
+            //Text(viewModel.name)
 //            Text(viewModel.height)
+            //Text(viewModel.weight)
         }
         .padding()
         .onAppear {
