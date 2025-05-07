@@ -11,15 +11,13 @@ struct ContentView: View {
     @StateObject private var viewModel = PokemonViewModel()
     
     var body: some View {
-        VStack(spacing: 20) {
-//            Image(viewModel.pokemon.sprites.front_default)
-//                .imageScale(.large)
-//                .foregroundStyle(.tint)
-            //Text(viewModel.name)
-//            Text(viewModel.height)
-            //Text(viewModel.weight)
+        ZStack {
+            VStack(spacing: 20) {
+                Text("Welcome")
+                Text(viewModel.usableData[0][0])
+            }
+            .padding()
         }
-        .padding()
         .onAppear {
             viewModel.fetchPokemon()
         }

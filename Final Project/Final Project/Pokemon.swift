@@ -31,15 +31,16 @@ struct Pokemon: Codable {
 
 class PokemonViewModel: ObservableObject {
     @Published var Newurl: String? = ""
-    @Published var name: String?
-    @Published var height: Int?
-    @Published var weight: Int?
+    @Published var name: String = ""
+    @Published var height: Int = 0
+    @Published var weight: Int = 0
+    @Published var usableData: [[String]] = [[]]
     
     func fetchPokemon() {
-//        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/35/") else {
-//            print("Invalid URL")
-//            return
-//        }
+        //        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/35/") else {
+        //            print("Invalid URL")
+        //            return
+        //        }
         guard var APIurl = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=5") else {
             print("Invalid URL")
             return
@@ -49,14 +50,14 @@ class PokemonViewModel: ObservableObject {
         URLSession.shared.dataTask(with: APIurl) { data, response, error in
             if let data = data {
                 do {
-                    let decodedResponse1 = try JSONDecoder().decode(PokemonResponse.self, from: data)
+                    let decodedResponse = try JSONDecoder().decode(PokemonResponse.self, from: data)
                     
                     print("Ahhhhhhhhh")
                     
                     var i = 0
-                    for response in decodedResponse1.results {
+                    for _ in decodedResponse.results {
                         DispatchQueue.main.async {
-                            self.Newurl = decodedResponse1.results[i].url
+                            self.Newurl = decodedResponse.results[i].url
                         }
                         print(self.Newurl)
                         APIurl = URL(string: self.Newurl!)!
@@ -65,12 +66,22 @@ class PokemonViewModel: ObservableObject {
                         URLSession.shared.dataTask(with: APIurl) { data, response, error in
                             if let data = data {
                                 do {
-                                    let decodedResponse2 = try JSONDecoder().decode(Pokemon.self, from: data)
+                                    let decodedResponse = try JSONDecoder().decode(Pokemon.self, from: data)
                                     
                                     DispatchQueue.main.async {
-                                        self.name = decodedResponse2.name
-                                        self.height = decodedResponse2.height
-                                        self.weight = decodedResponse2.weight
+                                        self.name = decodedResponse.name!
+                                        self.height = decodedResponse.height!
+                                        self.weight = decodedResponse.weight!
+                                        
+                                        
+                                        let index = self.usableData.count - 1
+                                        
+                                        self.usableData[index].append(self.name)
+                                        self.usableData[index].append("\(self.height)")
+                                        self.usableData[index].append("\(self.weight)")
+                                        
+                                        self.usableData.append([])
+                                        print(self.name)
                                     }
                                 } catch {
                                     print ("Decoding error: \(error)")
@@ -90,6 +101,6 @@ class PokemonViewModel: ObservableObject {
             }
         }.resume()
         
-        print("Goodbye World")
+        
     }
 }
